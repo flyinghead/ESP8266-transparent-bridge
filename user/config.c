@@ -402,7 +402,7 @@ void config_cmd_ap(serverConnData *conn, uint8_t argc, char *argv[]) {
 	os_bzero(&ap_conf, sizeof(struct softap_config));
 	wifi_softap_get_config(&ap_conf);
 	if (argc == 0)
-		espbuffsentprintf(conn, "SSID=%s PASSWORD=%s AUTHMODE=%d IS_HIDDEH_SSID=%d CHANNEL=%d\r\n"MSG_OK, ap_conf.ssid, ap_conf.password, ap_conf.authmode, ap_conf.ssid_hidden, ap_conf.channel);
+		espbuffsentprintf(conn, "SSID=%s PASSWORD=%s AUTHMODE=%d IS_HIDDEN_SSID=%d CHANNEL=%d\r\n"MSG_OK, ap_conf.ssid, ap_conf.password, ap_conf.authmode, ap_conf.ssid_hidden, ap_conf.channel);
 	else if (argc > 5)
 		espbuffsentstring(conn, MSG_ERROR);
 	else { //argc > 0
@@ -440,7 +440,7 @@ void config_cmd_ap(serverConnData *conn, uint8_t argc, char *argv[]) {
 		}
 		espbuffsentstring(conn, MSG_OK);
 		ETS_UART_INTR_DISABLE();
-		wifi_softap_set_config(&ap_conf);
+        wifi_softap_set_config(&ap_conf);
 		ETS_UART_INTR_ENABLE();
 	}
 }
@@ -503,6 +503,11 @@ void config_parse(serverConnData *conn, char *buf, int len) {
 	}
 	config_parse_args_free(argc, argv);
 	os_free(lbuf);
+}
+
+void disableDchpRouter() {
+    uint8_t mode = 0;
+    wifi_softap_set_dhcps_offer_option(OFFER_ROUTER, &mode);
 }
 
 #ifdef CONFIG_PARSE_TEST_UNIT

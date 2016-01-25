@@ -86,8 +86,10 @@ void user_init(void)
 	#ifdef CONFIG_STATIC
 		// refresh wifi config
 		config_execute();
-	#endif
-
+    #else
+        disableDchpRouter();
+    #endif
+    
 	#ifdef CONFIG_DYNAMIC
 		serverInit(flash_param->port);
 	#else

@@ -29,10 +29,10 @@ void ets_timer_disarm(ETSTimer *a);
 void ets_timer_setfn(ETSTimer *t, ETSTimerFunc *fn, void *parg);
 int os_printf(const char *format, ...)  __attribute__ ((format (printf, 1, 2)));
 int os_snprintf(char *str, size_t size, const char *format, ...) __attribute__ ((format (printf, 3, 4)));
-void pvPortFree(void *ptr);
-void *pvPortMalloc(size_t xWantedSize);
+void pvPortFree(void *ptr, const char *file, unsigned line);
+void *pvPortMalloc(size_t xWantedSize, const char *file, unsigned line);
 void *pvPortZalloc(size_t);
 void uart_div_modify(int no, unsigned int freq);
-void vPortFree(void *ptr);
-void *vPortMalloc(size_t xWantedSize);
+void vPortFree(void *ptr, const char *file, unsigned line);
+void *vPortMalloc(size_t xWantedSize, const char *file, unsigned line);
 #endif
